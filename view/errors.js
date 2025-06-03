@@ -10,10 +10,6 @@ class Error {
         this.field_list = []
     }
 
-    async get_erros() {
-        this.error_id_list = await eel.getData('erro', {"etapa_id": this.etapa});
-    }
-
     async render() {
         this.clear();
         this.field_list.forEach(e => {
@@ -25,6 +21,10 @@ class Error {
         this.erro_id.populate(this.error_id_list);
     }
 
+    async get_erros() {
+        this.error_id_list = await eel.getErros(this.etapa)();
+    }
+
     clear() {
         this.dom.innerHTML = '';
     }
@@ -33,13 +33,10 @@ class Error {
 class PreTestes extends Error {
     constructor(error_dom) {
         super(error_dom);
-
         this.etapa = 1;
-
         this.temporizacao = new TextInput('Temporização', 'nova-rft-erro-temporizacao');
         this.bateria_cr032 = new TextInput('Bateria CR032', 'nova-rft-erro-bateria-cr032');
         this.calibracao = new TextInput('Calibração', 'nova-rft-erro-calibracao');
-
         this.field_list = [
             this.temporizacao.input,
             this.bateria_cr032.input,
@@ -70,11 +67,8 @@ class Potencia extends Error {
 class Comunicacao extends Error {
     constructor(error_dom) {
         super(error_dom);
-
         this.etapa = 3;
-
         this.comunicacao = new TextArea('Descrição do erro', 'nova-rft-erro-comunicacao');
-
         this.field_list = [
             this.comunicacao.textarea
         ]
@@ -94,9 +88,7 @@ class Burnin extends Error {
         super(error_dom);
 
         this.etapa = 4;
-
         this.burnin = new TextArea('Descrição do erro', 'nova-rft-erro-burnin');
-
         this.field_list = [
             this.burnin.textarea
         ]

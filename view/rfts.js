@@ -213,7 +213,7 @@ export class ManutencaoRFT {
 			}
 		}
 
-		send(payload);
+		send(payload, this.start_rft_rebound);
 	}
 
 	save_rft() {

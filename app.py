@@ -20,8 +20,14 @@ def sendPayload(payload):
 	return response
 
 @eel.expose
-def getData(endpoint, params = None):
+def getData(endpoint):
 	return tecsci_server.get_request(endpoint, params = None)
+
+@eel.expose
+def getErros(etapa):
+	data = tecsci_server.get_request("erro", params = None)
+	response = [erro for erro in data if erro['etapa']['id'] == etapa]
+	return response
 
 
 if __name__ == "__main__":
