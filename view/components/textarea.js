@@ -1,5 +1,5 @@
 export class TextArea {
-	constructor(placeholder = 'Digite aqui', rows = 4, id = 'blank-textarea', state = false) {
+	constructor(placeholder = 'Digite aqui', id = 'blank-textarea', state = false, rows = 4) {
 		this.textarea = document.createElement('textarea');
 		this.textarea.id = id;
 		this.textarea.placeholder = placeholder;

@@ -1,5 +1,5 @@
 export class TextInput {
-	constructor(placeholder = 'Digite aqui', type = 'text', id = 'blank-input', state = false) {
+	constructor(placeholder = 'Digite aqui', id = 'blank-input', state = false,  type = 'text') {
 		this.input = document.createElement('input');
 		this.input.id = id;
 		this.input.type = type;

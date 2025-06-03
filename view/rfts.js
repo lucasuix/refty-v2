@@ -16,9 +16,8 @@ export class NovaRFT {
 		this.footer = document.getElementById(footer_frame);
 
 		this.serialnumber = new TextInput('Número de série', 'nova-rft-serialnumber');
-		this.operador_id = new Select('Operador', 'nova-rft-operador', false, 'operador');
-		this.etapa = new Select('Etapa', 'nova-rft-etapa', false, 'etapa');
-		this.erro_id = new Select('Erro', 'nova-rft-erro', false, 'erro');
+		this.operador_id = new Select('Operador', 'nova-rft-operador', false);
+		this.etapa = new Select('Etapa', 'nova-rft-etapa', false);
 
 		this.erros = new Erros(this.erro);
 
@@ -74,7 +73,7 @@ export class NovaRFT {
 			"serialNumber": this.serialnumber.getValue(),
 			"operadorID": this.operador_id.getValue(),
 			"stage": this.etapa.getValue(),
-			"erro_id": this.erro_id.getValue()
+			"erro_id": this.erros.getValue()
 		}
 	}
 
@@ -95,21 +94,21 @@ export class NovaRFT {
 export class ManutencaoRFT {
 
 	//DECLARAÇÃO INÍCIO
-	constructor(header_frame, body_frame, error_frame,footer_frame) {
+	constructor(header_frame, body_frame, error_frame, manutencao_frame, footer_frame) {
 
 		this.header = document.getElementById(header_frame);
 		this.body = document.getElementById(body_frame);
 		this.erro = document.getElementById(error_frame);
+		this.manutencao = document.getElementById(manutencao_frame);
 		this.footer = document.getElementById(footer_frame);
 
 		this.search_rft = new TextInput('Digite o número de série', 'manutencao-rft-search-rft');
 		this.get_last_rft = new Button('Obter última RFT', ['btn-success'], 'manutencao-rft-get-last-rft');
 
 		this.internal_rft_id = "";
-		this.serialnumber = new TextInput('Número de série', 'text', 'manutencao-rft-serialnumber', true);
+		this.serialnumber = new TextInput('Número de série', 'manutencao-rft-serialnumber', true);
 		this.operador_id = new Select('Operador', 'manutencao-rft-operador', true);
 		this.etapa = new Select('Etapa', 'manutencao-rft-etapa', true);
-		this.erro_id = new Select('Erro', 'manutencao-rft-erro', true);
 		this.tecnico_id = new Select('Tecnico', 'manutencao-rft-tecnico');
 		this.procedimento = new TextArea('Procedimento realizado...', 'manutencao-rft-procedimento');
 		this.solucao = new Select('Solução', 'manutencao-rft-solucao');
@@ -118,30 +117,43 @@ export class ManutencaoRFT {
 
 		this.cancelar = new Button('Cancelar', ['btn-danger'], 'manutencao-rft-cancelar');
 		this.salvar_rft = new Button('Salvar', ['btn-secondary'], 'manutencao-rft-salvar-rft');
+		this.pausar_rft = new Button('Pausar', ['btn-warning'], 'manutencao-rft-pausar');
 		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'manutencao-rft-enviar');
 
 		this.get_last_rft.button.addEventListener('click', () => this.start_rft());
 		this.cancelar.button.addEventListener('click', () => this.clear());
-		this.enviar_rft.button.addEventListener('click', () => this.save_rft());
+		this.salvar_rft.button.addEventListener('click', () => this.save_rft());
+		this.pausar_rft.button.addEventListener('click', () => this.pause_rft());
 		this.enviar_rft.button.addEventListener('click', () => this.finish_rft());
 
-		this.start_rft_rebound = (data) => {
-			this.internal_rft_id = data.id;
-			this.serialnumber.setValue(data.serialNumber);
-			this.operador_id.setValue(data.operadorID);
-			this.etapa.setValue(data.stage);
-			this.erro_id.setValue(data.erro_id);
+		this.start_rft_rebound = (rft) => {
+			this.search_rft.setValue("");
 
-			this.tecnico_id.setValue(data.tecnicoID);
-			this.procedimento.setValue(data.actions_taken);
-			this.solucao.setValue(data.solucao);
+			this.internal_rft_id = rft.id;
+			this.serialnumber.setValue(rft.serialnumber);
+			this.operador_id.setValue(rft.operador_id);
+			this.etapa.setValue(rft.etapa_id);
+			this.erros.render(rft.etapa_id);
+			this.erros.setValue(rft.erro_id);
+			this.erros.frozen(true);
+			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
+			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
+			this.solucao.setValue(rft.solucao == undefined ? "" : rft.solucao);
+
+			this.enviar_rft.disabled(rft.congelada);
+
+			this.show();
 		}
 
-		this.save_rft_rebound = (data) => {
+		this.pause_rft_rebound = (rft) => {
+			this.enviar_rft.disabled(rft.congelada);
+		}
+
+		this.save_rft_rebound = (rft) => {
 			console.log("Save RFT rebound!");
 		}
 
-		this.finish_rft_rebound = (data) => {
+		this.finish_rft_rebound = (rft) => {
 			console.log("Finish RFT rebound");
 			this.clear();
 			this.hide();
@@ -165,15 +177,15 @@ export class ManutencaoRFT {
 		this.serialnumber.render(this.body);
 		this.operador_id.render(this.body);
 		this.etapa.render(this.body);
-		this.erro_id.render(this.body);
-		this.tecnico_id.render(this.body);
-		this.procedimento.render(this.body);
-		this.solucao.render(this.body);
 	}
 
 	render_footer() {
+		this.tecnico_id.render(this.manutencao);
+		this.procedimento.render(this.manutencao);
+		this.solucao.render(this.manutencao);
 		this.cancelar.render(this.footer);
 		this.salvar_rft.render(this.footer);
+		this.pausar_rft.render(this.footer);
 		this.enviar_rft.render(this.footer);
 	}
 
@@ -181,14 +193,18 @@ export class ManutencaoRFT {
 		this.tecnico_id.clear();
 		this.procedimento.clear();
 		this.solucao.clear();
+		this.erros.clear();
+		this.hide();
 	}
 
 	hide() {
+		setVisibility(this.manutencao, false);
 		setVisibility(this.body, false);
 		setVisibility(this.footer, false);
 	}
 
 	show() {
+		setVisibility(this.manutencao, true);
 		setVisibility(this.body, true);
 		setVisibility(this.footer, true);
 	}
@@ -205,9 +221,20 @@ export class ManutencaoRFT {
 		}
 	}
 
+	pause_rft() {
+		const payload = {
+			"rft": {"id": "38128n9ex219"},
+			"metadata": {
+				"action": "pausar_manutencao"
+			}
+		}
+
+		send(payload, this.pause_rft_rebound);
+	}
+
 	start_rft() {
 		const payload = {
-			"rft": {"serialNumber": this.serialnumber.getValue()},
+			"rft": {"serialNumber": this.search_rft.getValue()},
 			"metadata": {
 				"action": "iniciar_manutencao"
 			}

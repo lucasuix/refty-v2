@@ -19,6 +19,7 @@ const manutencao_rft = new ManutencaoRFT(
     'manutencao-rft-header',
     'manutencao-rft-body',
     'manutencao-rft-erros',
+    'manutencao-rft-manutencao',
     'manutencao-rft-footer'
 );
 //DECLARAÇÃO DE RFTS FIM

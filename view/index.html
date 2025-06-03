@@ -25,28 +25,37 @@
   <div class="container mt-5">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="operador" data-bs-toggle="tab" 
+        <button class="nav-link active" id="nav-tab-nova-rft" data-bs-toggle="tab" 
                 data-bs-target="#content-nova-rft" type="button" role="tab">Nova RFT</button>
       </li>
       <li class="nav-item" role="presentation">
-        <button class="nav-link" id="manutencao" data-bs-toggle="tab" 
-                data-bs-target="#content-manutencao" type="button" role="tab">Manutenção</button>
+        <button class="nav-link" id="nav-tab-manutencao" data-bs-toggle="tab" 
+                data-bs-target="#content-manutencao-rft" type="button" role="tab">Manutenção</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="nav-tab-perdas" data-bs-toggle="tab"
+                data-bs-target="#content-perdas" type="button" role="tab">Perdas</button>
       </li>
     </ul>
 
     <div class="tab-content">
-      <div class="tab-pane fade show active" id="content-nova-rft" role="tabpanel" aria-labelledby="operador">
+      <div class="tab-pane fade show active" id="content-nova-rft" role="tabpanel" aria-labelledby="nav-tab-nova-rft">
         <h4 class="mt-4">RFT:</h4>
         <div id="nova-rft-body"></div>
         <div id="nova-rft-erros"></div>
         <div id="nova-rft-footer" class="d-flex justify-content-end gap-2"></div>
       </div>
 
-      <div class="tab-pane fade" id="content-manutencao" role="tabpanel" aria-labelledby="manutencao">
-        <div id="manutencao-rft-header" class="d-flex"></div>
+      <div class="tab-pane fade" id="content-manutencao-rft" role="tabpanel" aria-labelledby="nav-tab-manutencao">
+        <div id="manutencao-rft-header" class="d-flex gap-2"></div>
         <div id="manutencao-rft-body"></div>
         <div id="manutencao-rft-erros"></div>
+        <div id="manutencao-rft-manutencao"></div>
         <div id="manutencao-rft-footer" class="d-flex justify-content-end gap-2"></div>
+      </div>
+
+      <div class="tab-pane fade" id="content-perdas" role="tabpanel" aria-labelledby="nav-tab-perdas">
+
       </div>
     </div>
   </div>

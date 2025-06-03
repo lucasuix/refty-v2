@@ -54,13 +54,17 @@ class PreTestes extends Error {
         this.temporizacao.clear();
         this.bateria_cr032.clear();
         this.calibracao.clear();
+        this.erro_id.setValue("");
     }
 }
 
 class Potencia extends Error {
     constructor(error_dom) {
         super(error_dom);
+    }
 
+    clean() {
+        console.log("Clean Potência");
     }
 }
 
@@ -80,6 +84,7 @@ class Comunicacao extends Error {
 
     clean() {
         this.comunicacao.clear();
+        this.erro_id.setValue("");
     }
 }
 
@@ -100,6 +105,7 @@ class Burnin extends Error {
 
     clean() {
         this.burnin.clear();
+        this.erro_id.setValue("");
     }
 }
 
@@ -112,6 +118,8 @@ export class Erros {
         this.comunicacao = new Comunicacao(error_dom);
         this.burnin = new Burnin(error_dom);
 
+        this.etapa_id = 1;
+
         this.etapas = {
             1: this.pretestes,
             2: this.potencia,
@@ -120,11 +128,34 @@ export class Erros {
         }
     }
 
-    render(etapa) {
-        this.etapas[etapa].render(this.dom);
+    render(etapa_id) {
+        this.etapa_id = etapa_id;
+        this.etapas[this.etapa_id].render(this.dom);
+    }
+
+    getValue() {
+        return this.etapas[this.etapa_id].erro_id.getValue();
+    }
+
+    setValue(value) {
+        this.etapas[this.etapa_id].erro_id.setValue(value);
+    }
+
+    frozen(value) {
+        this.etapas[this.etapa_id].field_list.forEach(e => {e.disabled = value});
+        this.etapas[this.etapa_id].erro_id.disabled(value);
+    }
+
+    soft_clear() {
+        this.dom.innerHTML = '';
     }
 
     clear() {
-        this.dom.innerHTML = '';
+        this.soft_clear();
+
+        this.pretestes.clean();
+        this.potencia.clean();
+        this.comunicacao.clean();
+        this.burnin.clean();
     }
 }
