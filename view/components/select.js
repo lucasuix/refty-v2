@@ -3,11 +3,11 @@ export class Select {
 		this.select = document.createElement('select');
 		this.select.classList.add('form-select');  // Classe do Bootstrap
 		this.select.id = id;
-		this.select.name = name;
 
 		// Placeholder (opção desabilitada)
 		const placeholderOption = document.createElement('option');
 		placeholderOption.textContent = placeholder;
+		placeholderOption.value = "";
 		placeholderOption.disabled = true;
 		placeholderOption.selected = true;
 		this.select.appendChild(placeholderOption);
@@ -35,6 +35,10 @@ export class Select {
 
 	getValue() {
 		return this.select.value;
+	}
+
+	setValue(value) {
+		this.select.value = value;
 	}
 
 	render(parent = document.body) {

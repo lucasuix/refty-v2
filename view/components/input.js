@@ -2,7 +2,6 @@ export class TextInput {
 	constructor(placeholder = 'Digite aqui', type = 'text', id = 'blank-input', state = false) {
 		this.input = document.createElement('input');
 		this.input.id = id;
-		this.input.name = name;
 		this.input.type = type;
 		this.input.placeholder = placeholder;
 		this.input.classList.add('form-control');  // Classe do Bootstrap

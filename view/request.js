@@ -1,44 +1,20 @@
+import {toast} from './components/toast.js';
+
 export async function sendRequest(payload) {
 	return await eel.sendPayload(payload)();
 }
 
-export async function fetchRequest(endpoint, token) {
-	console.log(token);
-	fetch('https://ppc.tecsci.com.br/api/v1.0/' + endpoint, {
-		method: "GET",
-		headers: {"Authorization": "Bearer " + token}
-	})
+export function send(payload, rebound) {
+	sendRequest(payload)
 	.then(response => {
-		return response.json();
+			return JSON.parse(response);
 	})
-	.then(data => {
-		console.log(data);
-		return data;
+	.then(data =>{
+		toast.accuse(data.toast);
+		data.success ? rebound(data) : null;
 	})
-	.catch(error => {
+	.catch(error =>{
 		console.log(error);
-		return null;
-	});
-}
-
-export async function fetchToken() {
-	fetch('https://ppc.tecsci.com.br/api/v1.0/auth/login', {
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		body: JSON.stringify({
-			username: "lucas.villani",
-			password: "12345678"
-		})
-	})
-	.then(response => {
-		return response.json();
-	})
-	.then(data => {
-		console.log(data);
-		return data.access_token;
-	})
-	.catch(error => {
-		console.log(error);
-		return null;
+		toast.accuse("Um erro ocorreu ao enviar dados");
 	});
 }

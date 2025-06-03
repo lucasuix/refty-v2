@@ -9,10 +9,7 @@ export class Button {
 	}
 
 	add_classes(class_list) {
-		this.button.classList.add('btn', 'mt-3');
-		class_list.forEach(c => {
-			this.button.classList.add(c);
-		});
+		this.button.classList.add('btn', 'mt-3', ...class_list);
 	}
 
 	disabled(state) {

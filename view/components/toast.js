@@ -1,7 +1,7 @@
 class Toast {
 	constructor(message, classes = [], id = 'blank-toast', autohide = true, delay = 5000) {
 		this.toast = document.createElement('div');
-		this.toast.classList.add('toast', 'align-items-center', ...classes);
+		this.toast.classList.add('toast', 'align-items-center', 'position-fixed', 'top-0', 'end-0', 'p-1', 'mt-3', 'mx-3', ...classes);
 		this.toast.id = id;
 		this.toast.setAttribute('role', 'alert');
 		this.toast.setAttribute('aria-live', 'assertive');
@@ -25,8 +25,8 @@ class Toast {
 		this.toast.appendChild(this.toastContent);
 
 		this.toastInstance = new bootstrap.Toast(this.toast, { autohide, delay });
-		//this.render();
-		//this.accuse("Bem Vindo!");
+		this.render();
+		this.accuse("Bem Vindo!");
 	}
 
 	show() {

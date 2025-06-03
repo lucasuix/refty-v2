@@ -2,7 +2,6 @@ export class TextArea {
 	constructor(placeholder = 'Digite aqui', rows = 4, id = 'blank-textarea', state = false) {
 		this.textarea = document.createElement('textarea');
 		this.textarea.id = id;
-		this.textarea.name = name;
 		this.textarea.placeholder = placeholder;
 		this.textarea.rows = rows;
 		this.textarea.classList.add('form-control');  // Bootstrap

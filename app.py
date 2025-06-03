@@ -20,8 +20,8 @@ def sendPayload(payload):
 	return response
 
 @eel.expose
-def getData(endpoint):
-	return tecsci_server.get_request(endpoint)
+def getData(endpoint, params = None):
+	return tecsci_server.get_request(endpoint, params = None)
 
 
 if __name__ == "__main__":
