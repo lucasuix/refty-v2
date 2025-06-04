@@ -8,6 +8,10 @@ export class Button {
 		this.disabled(state);
 	}
 
+	change_text(text) {
+		this.button.textContent = text;
+	}
+
 	add_classes(class_list) {
 		this.button.classList.add('btn', 'mt-3', ...class_list);
 	}

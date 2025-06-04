@@ -53,6 +53,7 @@ export class NovaRFT {
 
 	soft_clear() {
 		this.serialnumber.clear();
+		this.erros.soft_clear();
 	}
 
 	clear() {
@@ -70,10 +71,15 @@ export class NovaRFT {
 	//MÉTODOS SERVIDOR INÍCIO
 	generate_data() {
 		return {
-			"serialNumber": this.serialnumber.getValue(),
-			"operadorID": this.operador_id.getValue(),
-			"stage": this.etapa.getValue(),
-			"erro_id": this.erros.getValue()
+			"serialnumber": this.serialnumber.getValue(),
+			"operador_id": this.operador_id.getValue(),
+			"etapa_id": this.etapa.getValue(),
+			"erro_id": this.erros.getValue(),
+			"defeitos": {...this.erros.getAll()},
+			'metadata': { 
+                'concluida': false,
+                'descricao_defeito': 'TCU não comunica',
+            }
 		}
 	}
 
@@ -117,6 +123,7 @@ export class ManutencaoRFT {
 
 		this.cancelar = new Button('Cancelar', ['btn-danger'], 'manutencao-rft-cancelar');
 		this.salvar_rft = new Button('Salvar', ['btn-secondary'], 'manutencao-rft-salvar-rft');
+		this.retomar_rft = new Button('Retomar', ['btn-warning', 'manutencao-rft-retomar']);
 		this.pausar_rft = new Button('Pausar', ['btn-warning'], 'manutencao-rft-pausar');
 		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'manutencao-rft-enviar');
 
@@ -124,6 +131,7 @@ export class ManutencaoRFT {
 		this.cancelar.button.addEventListener('click', () => this.clear());
 		this.salvar_rft.button.addEventListener('click', () => this.save_rft());
 		this.pausar_rft.button.addEventListener('click', () => this.pause_rft());
+		this.retomar_rft.button.addEventListener('click', () => this.unpause_rft());
 		this.enviar_rft.button.addEventListener('click', () => this.finish_rft());
 
 		this.start_rft_rebound = (rft) => {
@@ -134,19 +142,30 @@ export class ManutencaoRFT {
 			this.operador_id.setValue(rft.operador_id);
 			this.etapa.setValue(rft.etapa_id);
 			this.erros.render(rft.etapa_id);
+			this.erros.setAll(rft.defeitos);
 			this.erros.setValue(rft.erro_id);
 			this.erros.frozen(true);
+
 			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
 			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
 			this.solucao.setValue(rft.solucao == undefined ? "" : rft.solucao);
 
-			this.enviar_rft.disabled(rft.congelada);
+			this.tecnico_id.disabled(rft.metadata.concluida);
+			this.procedimento.disabled(rft.metadata.concluida);
+			this.solucao.disabled(rft.metadata.concluida);
+
+			this.salvar_rft.disabled(rft.metadata.concluida);
+			this.pausar_rft.disabled(rft.metadata.congelada || rft.metadata.concluida );
+			this.enviar_rft.disabled(rft.metadata.concluida || rft.metadata.congelada);
+			this.retomar_rft.disabled(!(rft.metadata.congelada) || rft.metadata.concluida);
 
 			this.show();
 		}
 
 		this.pause_rft_rebound = (rft) => {
-			this.enviar_rft.disabled(rft.congelada);
+			this.pausar_rft.disabled(rft.metadata.congelada);
+			this.enviar_rft.disabled(rft.metadata.congelada);
+			this.retomar_rft.disabled(!(rft.metadata.congelada));
 		}
 
 		this.save_rft_rebound = (rft) => {
@@ -186,6 +205,7 @@ export class ManutencaoRFT {
 		this.cancelar.render(this.footer);
 		this.salvar_rft.render(this.footer);
 		this.pausar_rft.render(this.footer);
+		this.retomar_rft.render(this.footer);
 		this.enviar_rft.render(this.footer);
 	}
 
@@ -221,9 +241,20 @@ export class ManutencaoRFT {
 		}
 	}
 
+	unpause_rft() {
+		const payload = {
+			"rft": { "id": this.internal_rft_id },
+			"metadata": {
+				"action": "retomar_manutencao"
+			}
+		}
+
+		send(payload, this.pause_rft_rebound);
+	}
+
 	pause_rft() {
 		const payload = {
-			"rft": {"id": "38128n9ex219"},
+			"rft": {"id": this.internal_rft_id },
 			"metadata": {
 				"action": "pausar_manutencao"
 			}
@@ -234,7 +265,7 @@ export class ManutencaoRFT {
 
 	start_rft() {
 		const payload = {
-			"rft": {"serialNumber": this.search_rft.getValue()},
+			"rft": {"serialnumber": this.search_rft.getValue()},
 			"metadata": {
 				"action": "iniciar_manutencao"
 			}

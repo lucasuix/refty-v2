@@ -11,7 +11,7 @@ export function send(payload, rebound) {
 	})
 	.then(data =>{
 		toast.accuse(data.toast);
-		data.success ? rebound(data.rft) : null;
+		data.success ? rebound(data.rft) : console.log(data.erros);
 	})
 	.catch(error =>{
 		console.log(error);
