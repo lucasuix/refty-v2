@@ -1,5 +1,9 @@
 export function gerar_descricao(values, etapa, erro_id, erros) {
 
+    if (erros == undefined) {
+        return "Sem descrição";
+    }
+
     const match = erros.find(item => item.id == erro_id);
     let data = "";
 
