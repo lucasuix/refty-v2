@@ -5,6 +5,10 @@ export function gerar_descricao(values, etapa, erro_id, erros) {
     }
 
     const match = erros.find(item => item.id == erro_id);
+
+    if (match == undefined) {
+        return "Sem descrição";
+    }
     let data = "";
 
     switch (etapa) {
