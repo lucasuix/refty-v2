@@ -154,7 +154,7 @@ export class ManutencaoRFT {
 
 			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
 			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
-			this.solucao.setValue(rft.solucao == undefined ? "" : rft.solucao);
+			this.solucao.setValue(rft.solucao_id == undefined ? "" : rft.solucao_id);
 			this.perdas.setValue(rft.perdas == undefined ? "": rft.perdas);
 
 			this.tecnico_id.disabled(rft.metadata.concluida);
