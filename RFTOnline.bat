@@ -1,3 +1,3 @@
 @echo off
-python app.py
-pause
+start "" pythonw app.py
+exit

@@ -3,6 +3,7 @@ import {Select} from './components/select.js';
 import {TextInput} from './components/input.js';
 import {TextArea} from './components/textarea.js';
 import {setVisibility} from './utils/visibility.js';
+import { gerar_descricao } from './utils/gerar_descricao.js';
 import {send} from './request.js';
 import { Erros } from './erros.js';
 
@@ -78,7 +79,10 @@ export class NovaRFT {
 			"defeitos": {...this.erros.getAll()},
 			'metadata': { 
                 'concluida': false,
-                'descricao_defeito': 'TCU não comunica',
+                'descricao_defeito': gerar_descricao(	this.erros.getAll(),
+														this.etapa.getValue(),
+														this.erros.erro_id.getValue(),
+														this.erros.erros_id[this.etapa.getValue()]),
             }
 		}
 	}
@@ -241,7 +245,7 @@ export class ManutencaoRFT {
 			"id": this.internal_rft_id,
 			"serialnumber": this.serialnumber.getValue(),
 			"tecnico_id": this.tecnico_id.getValue(),
-			"procedimento": this.procedimento.getValue(),
+			"procedimento": this.procedimento.getValue() == "" ? this.solucao.select.options[this.solucao.select.selectedIndex].text : this.procedimento.getValue(),
 			"solucao_id": this.solucao.getValue(),
 			"perdas": this.perdas.getValue() == "" ? "Sem perdas" : this.perdas.getValue()
 		}
