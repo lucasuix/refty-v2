@@ -3,9 +3,9 @@ import { toast } from './components/toast.js';
 
 //REQUESTS INÍCIO
 toast.accuse("Obtendo dados");
-const operadores = await eel.getData('operador')();
-const etapas = await eel.getData('etapa')();
-const solucoes = await eel.getData('solucao')();
+const operadores    =   await eel.getData('operador')();
+const etapas        =   await eel.getData('etapa')();
+const solucoes      =   await eel.getData('solucao')();
 //REQUESTS FIM
 
 //DECLARAÇÃO DE RFTS INÍCIO
@@ -28,11 +28,13 @@ const manutencao_rft = new ManutencaoRFT(
 toast.accuse("Populando listas");
 nova_rft.operador_id.populate(operadores);
 nova_rft.etapa.populate(etapas);
+await nova_rft.erros.populate_erros_id();
 
 manutencao_rft.operador_id.populate(operadores);
 manutencao_rft.etapa.populate(etapas);
 manutencao_rft.tecnico_id.populate(operadores);
 manutencao_rft.solucao.populate(solucoes);
+await manutencao_rft.erros.populate_erros_id();
 //POPULATES FIM
 
 toast.accuse("Bem Vindo!");

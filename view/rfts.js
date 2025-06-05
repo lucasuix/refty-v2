@@ -4,7 +4,7 @@ import {TextInput} from './components/input.js';
 import {TextArea} from './components/textarea.js';
 import {setVisibility} from './utils/visibility.js';
 import {send} from './request.js';
-import { Erros } from './errors.js';
+import { Erros } from './erros.js';
 
 export class NovaRFT {
 
@@ -19,7 +19,7 @@ export class NovaRFT {
 		this.operador_id = new Select('Operador', 'nova-rft-operador', false);
 		this.etapa = new Select('Etapa', 'nova-rft-etapa', false);
 
-		this.erros = new Erros(this.erro);
+		this.erros = new Erros(this.erro, 'nova-rft');
 
 		this.cancelar = new Button('Cancelar', ['btn-danger'], 'nova-rft-cancelar');
 		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'nova-rft-enviar');
@@ -74,7 +74,7 @@ export class NovaRFT {
 			"serialnumber": this.serialnumber.getValue(),
 			"operador_id": this.operador_id.getValue(),
 			"etapa_id": this.etapa.getValue(),
-			"erro_id": this.erros.getValue(),
+			"erro_id": this.erros.erro_id.getValue(),
 			"defeitos": {...this.erros.getAll()},
 			'metadata': { 
                 'concluida': false,
@@ -118,8 +118,9 @@ export class ManutencaoRFT {
 		this.tecnico_id = new Select('Tecnico', 'manutencao-rft-tecnico');
 		this.procedimento = new TextArea('Procedimento realizado...', 'manutencao-rft-procedimento');
 		this.solucao = new Select('Solução', 'manutencao-rft-solucao');
+		this.perdas = new TextArea('Perdas', 'manutencao-rft-perdas');
 
-		this.erros = new Erros(this.erro);
+		this.erros = new Erros(this.erro, 'manutencao-rft');
 
 		this.cancelar = new Button('Cancelar', ['btn-danger'], 'manutencao-rft-cancelar');
 		this.salvar_rft = new Button('Salvar', ['btn-secondary'], 'manutencao-rft-salvar-rft');
@@ -141,18 +142,21 @@ export class ManutencaoRFT {
 			this.serialnumber.setValue(rft.serialnumber);
 			this.operador_id.setValue(rft.operador_id);
 			this.etapa.setValue(rft.etapa_id);
+			this.erros.setAll(rft.defeitos, rft.etapa_id);
 			this.erros.render(rft.etapa_id);
-			this.erros.setAll(rft.defeitos);
-			this.erros.setValue(rft.erro_id);
-			this.erros.frozen(true);
+			this.erros.disabled(true, rft.etapa_id);
+			this.erros.erro_id.setValue(rft.erro_id);
+			this.erros.erro_id.disabled(true);
 
 			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
 			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
 			this.solucao.setValue(rft.solucao == undefined ? "" : rft.solucao);
+			this.perdas.setValue(rft.perdas == undefined ? "": rft.perdas);
 
 			this.tecnico_id.disabled(rft.metadata.concluida);
 			this.procedimento.disabled(rft.metadata.concluida);
 			this.solucao.disabled(rft.metadata.concluida);
+			this.perdas.disabled(rft.metadata.concluida);
 
 			this.salvar_rft.disabled(rft.metadata.concluida);
 			this.pausar_rft.disabled(rft.metadata.congelada || rft.metadata.concluida );
@@ -202,6 +206,7 @@ export class ManutencaoRFT {
 		this.tecnico_id.render(this.manutencao);
 		this.procedimento.render(this.manutencao);
 		this.solucao.render(this.manutencao);
+		this.perdas.render(this.manutencao);
 		this.cancelar.render(this.footer);
 		this.salvar_rft.render(this.footer);
 		this.pausar_rft.render(this.footer);
@@ -234,10 +239,11 @@ export class ManutencaoRFT {
 	generate_data() {
 		return {
 			"id": this.internal_rft_id,
-			"serialNumber": this.serialnumber.getValue(),
-			"tecnicoID": this.tecnico_id.getValue(),
-			"actions_taken": this.procedimento.getValue(),
-			"solucao": this.solucao.getValue()
+			"serialnumber": this.serialnumber.getValue(),
+			"tecnico_id": this.tecnico_id.getValue(),
+			"procedimento": this.procedimento.getValue(),
+			"solucao_id": this.solucao.getValue(),
+			"perdas": this.perdas.getValue() == "" ? "Sem perdas" : this.perdas.getValue()
 		}
 	}
 

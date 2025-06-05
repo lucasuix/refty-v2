@@ -1,0 +1,40 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+    background-image: url('assets/background.jpg');
+    background-size: cover; /* Faz a imagem cobrir toda a tela */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    background-position: center; /* Centraliza a imagem */
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+.accordion-button:focus {
+    box-shadow: none; /* remove the blue glow */
+    border-color: #444; /* your custom border color */
+    background-color: #212529; /* dark background if you want */
+    color: #fff; /* white text */
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #212529; /* dark background */
+    color: #fff; /* white text */
+}
+
+.accordion-button:hover {
+    background-color: #343a40; /* slightly lighter on hover */
+}
+
+tr {
+    text-align: center;
+}
+
+tr:hover, option:hover, select:hover,
+input[type="radio"]:hover, input[type="checkbox"]:hover {
+    cursor: pointer; /* opcional: muda o cursor ao passar por cima */
+}

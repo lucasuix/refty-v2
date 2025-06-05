@@ -5,18 +5,21 @@ export class Select {
 		this.select.id = id;
 
 		// Placeholder (opção desabilitada)
-		const placeholderOption = document.createElement('option');
-		placeholderOption.textContent = placeholder;
-		placeholderOption.value = "";
-		placeholderOption.disabled = true;
-		placeholderOption.selected = true;
-		this.select.appendChild(placeholderOption);
+		this.placeholderOption = document.createElement('option');
+		this.placeholderOption.textContent = placeholder;
+		this.placeholderOption.value = "";
+		this.placeholderOption.disabled = true;
+		this.placeholderOption.selected = true;
+		this.select.appendChild(this.placeholderOption);
 
 		this.select.classList.add('mt-3');
 		this.disabled(state);
 	}
 
 	async populate(options) {
+		this.select.innerHTML = '';
+		this.select.appendChild(this.placeholderOption);
+		this.select.value = "";
 		options.forEach(opt => {
 			const option = document.createElement('option');
 			option.value = opt.id;
