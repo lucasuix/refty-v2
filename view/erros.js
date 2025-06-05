@@ -132,7 +132,7 @@ class Comunicacao extends Block {
     generateContent() {
         this.form.content = `
             <div class="form-floating">
-                <textarea class="form-control" name="burnin" style="height: 100px">${this.form.values.comunicacao}</textarea>
+                <textarea class="form-control" name="comunicacao" style="height: 100px" value="${this.form.values.comunicacao}"></textarea>
                 <label for="floatingTextarea2">Decrição do Problema</label>
             </div>
         `;
@@ -151,7 +151,7 @@ class Burnin extends Block {
     generateContent() {
         this.form.content = `
             <div class="form-floating">
-                <textarea class="form-control" name="burnin" style="height: 100px">${this.form.values.burnin}</textarea>
+                <textarea class="form-control" name="burnin" style="height: 100px" value="${this.form.values.burnin}"></textarea>
                 <label for="floatingTextarea2">Decrição do Problema</label>
             </div>
         `;
