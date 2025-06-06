@@ -132,6 +132,7 @@ export class ManutencaoRFT {
 		this.pausar_rft = new Button('Pausar', ['btn-warning'], 'manutencao-rft-pausar');
 		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'manutencao-rft-enviar');
 
+		this.search_rft.input.addEventListener('input', () => this.dynamic_search());
 		this.get_last_rft.button.addEventListener('click', () => this.start_rft());
 		this.cancelar.button.addEventListener('click', () => this.clear());
 		this.salvar_rft.button.addEventListener('click', () => this.save_rft());
@@ -271,6 +272,10 @@ export class ManutencaoRFT {
 		}
 
 		send(payload, this.pause_rft_rebound);
+	}
+
+	dynamic_search() {
+		this.search_rft.getValue().length >= 13 ? this.start_rft() : null;
 	}
 
 	start_rft() {
