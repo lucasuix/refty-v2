@@ -29,6 +29,11 @@ def getErros(etapa):
 	response = [erro for erro in data if erro['etapa']['id'] == etapa]
 	return response
 
+@eel.expose
+def abrir_tutorial():
+    import os, webbrowser
+    path = os.path.abspath("view/tutorial.html")  # ajuste o caminho se necessário
+    webbrowser.open_new_tab(f"file://{path}")
 
 if __name__ == "__main__":
 	eel.init("view")

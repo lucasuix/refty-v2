@@ -8,6 +8,7 @@ body {
     background-size: cover; /* Faz a imagem cobrir toda a tela */
     background-repeat: no-repeat; /* Evita que a imagem se repita */
     background-position: center; /* Centraliza a imagem */
+    background-attachment: fixed;
 }
 
 .nav-link {

@@ -22,7 +22,7 @@ export class NovaRFT {
 
 		this.erros = new Erros(this.erro, 'nova-rft');
 
-		this.cancelar = new Button('Cancelar', ['btn-danger'], 'nova-rft-cancelar');
+		this.cancelar = new Button('Limpar', ['btn-danger'], 'nova-rft-cancelar');
 		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'nova-rft-enviar');
 
 		this.etapa.select.addEventListener('change', () => this.change_erro());
@@ -275,7 +275,7 @@ export class ManutencaoRFT {
 	}
 
 	dynamic_search() {
-		this.search_rft.getValue().length >= 13 ? this.start_rft() : null;
+		this.search_rft.getValue().length == 13 ? this.start_rft() : null;
 	}
 
 	start_rft() {

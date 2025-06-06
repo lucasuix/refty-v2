@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RFT Online - Tutorial</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Registro de Falha em TCU - Tutorial</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="container mt-5 d-flex gap-4">
+    <div id="list-example" class="list-group">
+    <a class="list-group-item list-group-item-action" href="#list-item-1">Enviar RFT</a>
+    <a class="list-group-item list-group-item-action" href="#list-item-2">Manutenção de RFT</a>
+    <a class="list-group-item list-group-item-action" href="#list-item-3">Sobre as pausas</a>
+    <a class="list-group-item list-group-item-action" href="#list-item-4">Como iniciar o servidor</a>
+    </div>
+    <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example flex-grow-1 me-2" tabindex="0">
+      <h4 id="list-item-1">Como enviar RFT</h4>
+      <p> Na aba <b>Nova RFT</b> preencha o número de série no campo:</p>
+      <input 
+      id="nova-rft-numero-serie" 
+      type="email" 
+      placeholder="Número de Série" 
+      class="form-control mt-3 mb-3">
+      <p> Selecione <b>o seu nome</b> na lista de operadores, por exemplo:</p>
+      <select id="nova-rft-operador" class="form-select mt-3 mb-3">
+        <option value="" selected disabled>Operador</option>
+        <option value="1">João</option>
+        <option value="2">Maria</option>
+        <option value="3">Carlos</option>
+      </select>
+      <p> Em seguida selecione a etapa em que a TCU apresentou defeito.
+          Neste momento o programa irá carregar automaticamente
+          o formulário da etapa em questão.
+          <br><br>
+          <b>Selecione uma opção para carregar o formulário:</b></p>
+      <select id="nova-rft-etapa" class="form-select mt-3 mb-3">
+        <option value="" selected disabled>Etapa</option>
+        <option value="1">Pré Testes</option>
+        <option value="2">Potência</option>
+        <option value="3">Comunicação</option>
+        <option value="4">Burnin</option>
+      </select>
+      <div id="formulario_demonstracao_nova_rft" class="mb-3"></div>
+      <p> Para cada etapa, o formulário de erro terá um campo
+              <i>Erro ID</i> com os erros que ocorrem naquele estágio.<br>
+              Este campo caracteriza o erro de maneira geral.<br>
+              <b>É obrigatório</b> e pode ser usado para o preenchimento
+              mais rápido e ágil da RFT.<br>
+              Por exemplo, invés de digitar "TCU está com o LED trocado",
+              se houver a opção "LED com cor invertida" no Erro ID,
+              é possível marcar apenas essa opção e realizar o envio normalmente.<br>
+      </p>
+      <select id="nova-rft-erros" class="form-select mt-3 mb-3">
+            <option value="" selected disabled>Erro ID</option>
+            <option value="1">TCU não comunica</option>
+            <option value="2">TCU com corrente alta</option>
+            <option value="3">TCU com LED invertido</option>
+            <option value="4">TCU com corrente baixa</option>
+      </select>
+      <hr>
+      <h4 id="list-item-2" class="mt-4">Manutenção de RFT</h4>
+      <p>Acesse a aba <b>Manutenção</b> e digite ou bipe o número de série da TCU com defeito no campo. <br>
+        <b>Preencha o campo com um valor qualquer para carregar uma manutenção de demonstração:</b>
+      </p>
+      <div class="d-flex gap-2">
+        <input 
+        id="manutencao-rft-search-rft" 
+        type="email" 
+        placeholder="Digite o número de série" 
+        class="form-control mt-3">
+        <button id="enviar-btn" class="btn mt-3 btn-success" onclick="">
+          Obter Última RFT
+        </button>
+      </div>
+      <div id="manutencao-rft-nova-demonstracao" class="d-none">
+          <div id="manutencao-rft-body" class=""><input id="manutencao-rft-serialnumber" type="text" placeholder="Número de série" class="form-control mt-3" disabled=""><select class="form-select mt-3" id="manutencao-rft-operador" disabled=""><option value="" disabled="">Operador</option><option value="26">Angélica</option><option value="25">Camila</option><option value="18">Charles</option><option value="28">Daniela</option><option value="4">Daniel Discini</option><option value="2">Gustavo Elias</option><option value="23">Hélio</option><option value="10">Joao Pedro</option><option value="8">José Soares</option><option value="22">Kathleyn</option><option value="6">Luan Costa</option><option value="17">Lucas Villani</option><option value="20">Luis Rogerio</option><option value="21">Márcia</option><option value="15">Mário Sergio</option><option value="1">Matheus Malta</option><option value="27">Michele</option><option value="13">Pedro Martins</option><option value="5">Raphael Vital</option><option value="7">Roger Lino</option><option value="9">Thiago</option><option value="24">Thiago Dias</option><option value="12">Valciscley</option><option value="19">Vinicius</option></select><select class="form-select mt-3" id="manutencao-rft-etapa" disabled=""><option value="" disabled="">Etapa</option><option value="1">Pré-testes</option><option value="2">Teste de Potência</option><option value="3">Teste de Comunicação</option><option value="4">Burn In</option></select></div>
+          <div id="manutencao-rft-erros"><form id="manutencao-rft-pre-testes" class="mt-3">
+              <div class="form-floating mb-3 mt-3">
+                  <input type="text" class="form-control" name="temporizacao" value="160mA" disabled="">
+                  <label for="floatingInput">1.1 Temporização</label>
+              </div>
+              <div class="form-floating mb-3">
+                  <input type="text" class="form-control" name="bateria_cr032" value="" disabled="">
+                  <label for="floatingInput">1.2 Bateria CR2032</label>
+              </div>
+              <div class="form-floating">
+                  <input type="text" class="form-control" name="calibracao" value="" disabled="">
+                  <label for="floatingInput">1.4 Calibração</label>
+              </div>
+          </form><select class="form-select mt-3" id="manutencao-rft-erro-id" disabled=""><option value="" disabled="">Erro ID</option><option value="13">Chicote solto ou invertido</option><option value="18">Componene solto</option><option value="17">Componente faltando</option><option value="16">Erro no inclinômetro (calibração)</option><option value="12">Substituição do case superior</option><option value="11">TCU com corrente alta</option><option value="1">TCU com corrente baixa</option><option value="19">TCU não temporizou</option><option value="28">TCU produz ruído ao energizar</option></select></div>
+          <div id="manutencao-rft-manutencao" class=""><select class="form-select mt-3" id="manutencao-rft-tecnico"><option value="" disabled="" selected>Tecnico</option><option value="26">Angélica</option><option value="25">Camila</option><option value="18">Charles</option><option value="28">Daniela</option><option value="4">Daniel Discini</option><option value="2">Gustavo Elias</option><option value="23">Hélio</option><option value="10">Joao Pedro</option><option value="8">José Soares</option><option value="22">Kathleyn</option><option value="6">Luan Costa</option><option value="17">Lucas Villani</option><option value="20">Luis Rogerio</option><option value="21">Márcia</option><option value="15">Mário Sergio</option><option value="1">Matheus Malta</option><option value="27">Michele</option><option value="13">Pedro Martins</option><option value="5">Raphael Vital</option><option value="7">Roger Lino</option><option value="9">Thiago</option><option value="24">Thiago Dias</option><option value="12">Valciscley</option><option value="19">Vinicius</option></select><textarea id="manutencao-rft-procedimento" placeholder="Procedimento realizado..." rows="4" class="form-control mt-3"></textarea><select class="form-select mt-3" id="manutencao-rft-solucao"><option value="" disabled="" selected>Solução</option><option value="1">Não preenchido</option><option value="2">Substituição de componente</option><option value="3">Ressolda de componente</option><option value="4">Reencaixe de componentes soltos</option><option value="5">Reorganização e crimpagem de chicote</option><option value="6">Regravação do firmware</option><option value="7">Reconfiguração da TCU e ajuste do número de série</option><option value="8">Substituição do cabo USB-Serial</option><option value="9">Regulagem do step up</option><option value="10">Limpeza da placa</option><option value="11">Recalibragem do inclinômetro</option><option value="12">Inclusão de componente faltando</option><option value="13">Corte do pino da placa do inclinômetro</option></select><textarea id="manutencao-rft-perdas" placeholder="Perdas" rows="4" class="form-control mt-3"></textarea></div>
+          <div id="manutencao-rft-footer" class="d-flex justify-content-end gap-2"><button id="manutencao-rft-cancelar" class="btn mt-3 btn-danger">Cancelar</button><button id="manutencao-rft-salvar-rft" class="btn mt-3 btn-secondary">Salvar</button><button id="manutencao-rft-pausar" class="btn mt-3 btn-warning">Pausar</button><button id="blank-button" class="btn mt-3 btn-warning manutencao-rft-retomar" disabled="">Retomar</button><button id="manutencao-rft-enviar" class="btn mt-3 btn-success">Enviar RFT</button></div>
+        </div>
+        <p class="mt-3">
+          O campo <b>Técnico</b> deve ser preenchido com o nome do técnico que está realizando a manutenção.<br>
+          O campo <b>Procedimento</b> pode ser preenchido com as ações realizadas para solucionar o problema. <b>Não é um campo obrigatório</b>.<br>
+          O campo <b>Solução</b> deve ser preenchido com a opção que descreva a o Procedimento realizado de forma geral.<br>
+          O campo <b>Perdas</b> deve ser preenchido, caso hajam perdas, de maneira livre citando os componentes que foram trocados ou removidos. <b>Não é um campo obrigatório, SE NÃO HOUVER PERDAS.</b>
+        </p>
+        <hr>
+        <p>
+          O botão <b>Salvar</b> permite salvar quaisquer anotações ou modificações feitas nos campos citados acima.<br>
+          <i>A ideia desse recurso é anotar o progresso e dados importantes para o técnico de manutenção para retomar a RFT depois (Ver <b>Sobre as pausas</b>)</i>.<br>
+          O botão <b>Cancelar</b> limpa a aba, mas <b>não reinicia o tempo de manutenção</b>.<br>
+          Uma vez concluído os procedimentos e a manutenção estiver pronta, clique em <b>Enviar RFT</b>.
+        </p>
+        <hr>
+        <p><b>IMPORTANTE: </b> O tempo de manutenção desconta automaticamente os tempos de almoço, café, descanso e finais de semana.<br>
+        Dessa maneira, se uma manutenção é iniciada sexta-feira às 15h50 e concluída na segunda às 7h10, o <i>tempo próprio</i> da manutenção é salvo como 20 minutos.
+        <br>
+        O mesmo vale para as pausas.
+        </p>
+      <hr>
+      <h4 id="list-item-3" class="mt-4">Sobre as pausas</h4>
+      <p>
+        As pausas são um recurso para o técnico de manutenção que, quando em alta demanda, interrompe a manutenção da(s) TCU(s) que estava trabalhando.
+        Para que esse tempo em que a TCU está encostada não seja considerado no tempo de manutenção, é possível pausar uma RFT com o botão <b>Pausa</b>.<br>
+        Quando o técnico estiver pronto para retomar a manutenção novamente, basta buscar a RFT pelo número de série da TCU e clicar em <b>Retomar</b>.<br><br>
+        O tempo em que a TCU permaneceu pausada não será considerado no cálculo do tempo de manutenção.
+      </p>
+      <hr>
+      <h4 id="list-item-4" class="mt-4">Como iniciar o servidor</h4>
+      <p>
+        No computador utilizado no Burnin, procure na <b>Área de Trabalho</b> um atalho com o nome <b>IniciarRFTOServidor</b>.<br>
+        Clique duas vezes no atalho.<br>
+        O script irá atualizar o IP no repositório git do programa.<br>
+        Agora ao abrir o programa <i><b>RFT Online</b></i>em qualquer máquina o IP do servidor será obtido automaticamente. Caso o programa já estiver aberto, feche e abra novamente para atualizar o IP.
+        <br><br>
+        Se não funcionar, no ícone <i>Wi-Fi</i> no canto inferior direito da tela do computador verifique se todos os computadores
+        estão conectados a mesma rede, se não, conecte todos à mesma rede, feche o servidor e o programa nas outras máquinas e 
+        repita o processo.
+      </p>
+    </div>
+  </div>
+  <script>
+    const formulario_demonstracao_nova_rft = document.getElementById('formulario_demonstracao_nova_rft');
+    const formulario_pre_testes = `
+            <div class="form-floating mb-3 mt-3">
+                <input type="text" class="form-control" name="temporizacao">
+                <label for="floatingInput">1.1 Temporização</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="bateria_cr032">
+                <label for="floatingInput">1.2 Bateria CR2032</label>
+            </div>
+            <div class="form-floating">
+                <input type="text" class="form-control" name="calibracao">
+                <label for="floatingInput">1.4 Calibração</label>
+            </div>
+
+            <p class="mt-3"> Preencha no(s) campo(s) correspondente(s) uma descrição breve da falha,
+                com informações que podem ajudar na manutenção.<br><br>
+                Por exemplo, se durante a temporização a corrente marcar 160mA,
+                anote esse valor no campo temporização.<br><br>
+                Isto é importante pois ajuda o técnico de manutenção a filtrar
+                o defeito mais provável com base nas suas características.<br><br>
+                Entretanto, não é obrigatório completar esses campos.
+                <br>
+                <b>Apenas o campo Erro ID é sempre obrigatório</b>
+                </p>
+          <hr>
+        `;
+    const formulario_potencia = `
+            <div class="mt-3 bg-dark rounded-3 border border-secondary p-3">
+                <div class="form-floating">
+                    <div class="d-flex">
+                        <div class="mx-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="curto_bateria">
+                                <label class="form-check-label" for="curto_bateria">Curto Bateria</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="dcdc_isolado">
+                                <label class="form-check-label" for="dcdc_isolado">DC-DC Isolado</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="subtensao_bateria">
+                                <label class="form-check-label" for="subtensao_bateria">Subtensão Bateria</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="curto_dcdc">
+                                <label class="form-check-label" for="curto_dcdc">Curto DC-DC</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="bateria_isolado">
+                                <label class="form-check-label" for="bateria_isolado">Bateria Isolado</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="retorno_subtensao">
+                                <label class="form-check-label" for="retorno_subtensao">Retorno Subtensão</label>
+                            </div>
+                        </div>
+
+                        <div class="mx-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="dcdc_load_stepup">
+                                <label class="form-check-label" for="dcdc_load_stopup">DC-DC, Load, Step-Up</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="retorno_sensor1">
+                                <label class="form-check-label" for="retorno_sensor1">Retorno Sensor 1</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="retorno_sensor2">
+                                <label class="form-check-label" for="retorno_sensor2">Retorno Sensor 2</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="teste_da_bateria">
+                                <label class="form-check-label" for="teste_da_bateria">Teste da Bateria</label>
+                            </div>
+
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="carga_bateria">
+                                <label class="form-check-label" for="carga_bateria">Carga da Bateria</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-3">
+                No teste de potência, marque cada <i>checkbox</i> com
+                o erro correspondente que ocorreu durante a realização do teste.<br><br>
+                Quando preencher o Erro ID, <b>selecione qualquer opção</b>.
+                Atualmente o campo erro id não corresponde aos valores do teste
+                em si.<br><br>
+                Basta garantir que as <i>checkboxes</i> estão devidamente marcadas
+                e prosseguir com o envio normalmente.
+            </p>
+          <hr>
+
+        `;
+        const formulario_comunicacao = `
+            <div class="form-floating">
+                <textarea class="form-control" id="nova-rft-comunicacao" name="comunicacao" style="height: 100px"></textarea>
+                <label for="nova-rft-comnicacao">Decrição do Problema</label>
+            </div>
+
+            <p class="mt-3">
+                Para o teste de comunicação, preencha a descrição com detalhes sobre o erro.<br>
+                Não é um campo obrigatório.
+            </p>
+          <hr>
+        `;
+
+        const formulario_burnin = `
+            <div class="form-floating">
+                <textarea class="form-control" id="nova-rft-burnin" name="comunicacao" style="height: 100px"></textarea>
+                <label for="nova-rft-burnin">Decrição do Problema</label>
+            </div>
+
+            <p class="mt-3">
+                Para o teste de burnin, preencha a descrição com detalhes sobre o erro.<br>
+                Não é um campo obrigatório.
+            </p>
+          <hr>
+        `;
+      
+    const etapa_demonstracao_nova_rft = document.getElementById('nova-rft-etapa');
+    etapa_demonstracao_nova_rft.addEventListener('change', (event) => {
+      switch (event.target.value) {
+        case "1":
+          formulario_demonstracao_nova_rft.innerHTML = formulario_pre_testes;
+          break;
+        case "2":
+          formulario_demonstracao_nova_rft.innerHTML = formulario_potencia;
+          break;
+        case "3":
+          formulario_demonstracao_nova_rft.innerHTML = formulario_comunicacao;
+          break;
+        case "4":
+          formulario_demonstracao_nova_rft.innerHTML = formulario_burnin;
+          break;
+      }
+    });
+
+    const etapa_demonstracao_manutencao_rft = document.getElementById('manutencao-rft-nova-demonstracao');
+    const search_rft_demonstracao = document.getElementById('manutencao-rft-search-rft');
+    const manutencao_rft_serial_number = document.getElementById('manutencao-rft-serialnumber');
+    search_rft_demonstracao.addEventListener('input', (event) => {
+      let value = event.target.value;
+      if (value.length == 13) {
+        etapa_demonstracao_manutencao_rft.classList.remove('d-none');
+        etapa_demonstracao_manutencao_rft.classList.add('d-block');
+        manutencao_rft_serial_number.value = value;
+        search_rft_demonstracao.value = "";
+      }
+    });
+  </script>
+  <!-- Bootstrap JS Bundle (with Popper) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
