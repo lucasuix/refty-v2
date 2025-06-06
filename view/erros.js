@@ -2,8 +2,8 @@ import { Block } from './components/block.js';
 import { Select } from './components/select.js';
 
 class PreTestes extends Block {
-    constructor(error_dom) {
-        super(error_dom);
+    constructor(error_dom, id) {
+        super(error_dom, id);
         this.etapa = 1;
         this.form.values = {
             "temporizacao": "",
@@ -31,8 +31,8 @@ class PreTestes extends Block {
 }
 
 class Potencia extends Block {
-    constructor(error_dom) {
-        super(error_dom);
+    constructor(error_dom, id) {
+        super(error_dom, id);
         this.etapa = 2;
         this.form.values = {
             "curto_bateria": false,
@@ -121,8 +121,9 @@ class Potencia extends Block {
 }
 
 class Comunicacao extends Block {
-    constructor(error_dom) {
-        super(error_dom);
+    constructor(error_dom, id) {
+        super(error_dom, id);
+        this.pre_fix = id;
         this.etapa = 3;
         this.form.values = {
             "comunicacao": ""
@@ -132,16 +133,17 @@ class Comunicacao extends Block {
     generateContent() {
         this.form.content = `
             <div class="form-floating">
-                <textarea class="form-control" name="comunicacao" style="height: 100px" value="${this.form.values.comunicacao}"></textarea>
-                <label for="floatingTextarea2">Decrição do Problema</label>
+                <textarea class="form-control" id="${this.pre_fix}-field" name="comunicacao" style="height: 100px">${this.form.values.comunicacao}</textarea>
+                <label for="${this.pre_fix}-field">Decrição do Problema</label>
             </div>
         `;
     }
 }
 
 class Burnin extends Block {
-    constructor(error_dom) {
-        super(error_dom);
+    constructor(error_dom, id) {
+        super(error_dom, id);
+        this.pre_fix = id;
         this.etapa = 4;
         this.form.values = {
             "burnin": ""
@@ -151,8 +153,8 @@ class Burnin extends Block {
     generateContent() {
         this.form.content = `
             <div class="form-floating">
-                <textarea class="form-control" name="burnin" style="height: 100px" value="${this.form.values.burnin}"></textarea>
-                <label for="floatingTextarea2">Decrição do Problema</label>
+                <textarea class="form-control" id="${this.pre_fix}-field" name="burnin" style="height: 100px">${this.form.values.burnin}</textarea>
+                <label for="${this.pre_fix}-field">Decrição do Problema</label>
             </div>
         `;
     }
