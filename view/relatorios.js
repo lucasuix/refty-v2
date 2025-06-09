@@ -1,7 +1,6 @@
 import { Block } from "./components/block.js";
 import { Button } from "./components/button.js";
 import { DatetimeInput } from "./components/datetime.js";
-import { Table } from "./componentes/table.js";
 
 class Aggregation extends Block {
     constructor(dom, id = 'relatorio-aggregation') {
@@ -122,7 +121,6 @@ export class Relatorio {
         data.forEach(value => {
             let wrapper = document.createElement('div');
             wrapper.classList.add('bg-dark', 'd-flex', 'justify-contente-between');
-            
         });
     }
     //METODOS VISUAIS FINAL
