@@ -1,4 +1,5 @@
 import {NovaRFT, ManutencaoRFT} from './rfts.js';
+import { Relatorio } from './relatorios.js';
 import { toast } from './components/toast.js';
 
 //REQUESTS INÍCIO
@@ -8,7 +9,7 @@ const etapas        =   await eel.getData('etapa')();
 const solucoes      =   await eel.getData('solucao')();
 //REQUESTS FIM
 
-//DECLARAÇÃO DE RFTS INÍCIO
+//DECLARAÇÃO DE ABAS INÍCIO
 toast.accuse("Renderizando Abas");
 const nova_rft = new NovaRFT(
     'nova-rft-body',
@@ -22,7 +23,11 @@ const manutencao_rft = new ManutencaoRFT(
     'manutencao-rft-manutencao',
     'manutencao-rft-footer'
 );
-//DECLARAÇÃO DE RFTS FIM
+const relatorio = new Relatorio(
+    'relatorio-header',
+    'relatorio-body'
+);
+//DECLARAÇÃO DE ABAS FIM
 
 //POPULATES INÍCIO
 toast.accuse("Populando listas");
