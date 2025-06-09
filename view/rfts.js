@@ -6,6 +6,7 @@ import {setVisibility} from './utils/visibility.js';
 import { gerar_descricao } from './utils/gerar_descricao.js';
 import {send} from './request.js';
 import { Erros } from './erros.js';
+import { Perdas } from './perdas.js';
 
 export class NovaRFT {
 
@@ -34,7 +35,7 @@ export class NovaRFT {
 
 		//Rebounds (what happens after server methods are called, the response from the program)
 		//they're passed to the send function from request.js
-		this.send_rft_rebound = (data) => {
+		this.send_rft_rebound = (data, others) => {
 			this.soft_clear();
 		}
 	}
@@ -122,8 +123,8 @@ export class ManutencaoRFT {
 		this.tecnico_id = new Select('Tecnico', 'manutencao-rft-tecnico');
 		this.procedimento = new TextArea('Procedimento realizado...', 'manutencao-rft-procedimento');
 		this.solucao = new Select('Solução', 'manutencao-rft-solucao');
-		this.perdas = new TextArea('Perdas', 'manutencao-rft-perdas');
 
+		this.perdas = new Perdas();
 		this.erros = new Erros(this.erro, 'manutencao-rft');
 
 		this.cancelar = new Button('Cancelar', ['btn-danger'], 'manutencao-rft-cancelar');
@@ -140,8 +141,9 @@ export class ManutencaoRFT {
 		this.retomar_rft.button.addEventListener('click', () => this.unpause_rft());
 		this.enviar_rft.button.addEventListener('click', () => this.finish_rft());
 
-		this.start_rft_rebound = (rft) => {
+		this.start_rft_rebound = (rft, others) => {
 			this.search_rft.setValue("");
+			this.clear();
 
 			this.internal_rft_id = rft.id;
 			this.serialnumber.setValue(rft.serialnumber);
@@ -156,7 +158,8 @@ export class ManutencaoRFT {
 			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
 			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
 			this.solucao.setValue(rft.solucao_id == undefined ? "" : rft.solucao_id);
-			this.perdas.setValue(rft.perdas == undefined ? "": rft.perdas);
+			this.perdas.popular_perdas(rft.perdas, rft.metadata.concluida);
+			this.perdas.popular_componentes(others.componentes);
 
 			this.tecnico_id.disabled(rft.metadata.concluida);
 			this.procedimento.disabled(rft.metadata.concluida);
@@ -171,17 +174,17 @@ export class ManutencaoRFT {
 			this.show();
 		}
 
-		this.pause_rft_rebound = (rft) => {
+		this.pause_rft_rebound = (rft, others) => {
 			this.pausar_rft.disabled(rft.metadata.congelada);
 			this.enviar_rft.disabled(rft.metadata.congelada);
 			this.retomar_rft.disabled(!(rft.metadata.congelada));
 		}
 
-		this.save_rft_rebound = (rft) => {
+		this.save_rft_rebound = (rft, others) => {
 			console.log("Save RFT rebound!");
 		}
 
-		this.finish_rft_rebound = (rft) => {
+		this.finish_rft_rebound = (rft, others) => {
 			console.log("Finish RFT rebound");
 			this.clear();
 			this.hide();
@@ -224,6 +227,7 @@ export class ManutencaoRFT {
 		this.procedimento.clear();
 		this.solucao.clear();
 		this.erros.clear();
+		this.perdas.clear();
 		this.hide();
 	}
 
@@ -248,7 +252,7 @@ export class ManutencaoRFT {
 			"tecnico_id": this.tecnico_id.getValue(),
 			"procedimento": this.procedimento.getValue() == "" ? this.solucao.select.options[this.solucao.select.selectedIndex].text : this.procedimento.getValue(),
 			"solucao_id": this.solucao.getValue(),
-			"perdas": this.perdas.getValue() == "" ? "Sem perdas" : this.perdas.getValue()
+			"perdas": this.perdas.getValue()
 		}
 	}
 

@@ -35,7 +35,7 @@ tr {
     text-align: center;
 }
 
-tr:hover, option:hover, select:hover,
+option:hover, select:hover,
 input[type="radio"]:hover, input[type="checkbox"]:hover {
     cursor: pointer; /* opcional: muda o cursor ao passar por cima */
 }
