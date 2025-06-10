@@ -35,6 +35,21 @@ def abrir_tutorial():
     path = os.path.abspath("view/tutorial.html")  # ajuste o caminho se necessário
     webbrowser.open_new_tab(f"file://{path}")
 
+@eel.expose
+def obter_detalhes_da_versao():
+    import os
+    try:
+        path = os.path.abspath("versao.json")
+
+        with open(path, 'r', encoding='utf-8') as file:
+            dados = json.load(file)
+
+        return dados
+
+    except Exception as e:
+        print(f"Erro ao ler versao.json: {e}")
+        return {"erro": str(e)}
+
 if __name__ == "__main__":
 	eel.init("view")
 	eel.start("index.html", port=8002)

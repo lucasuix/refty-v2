@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "date": "2025-06-10T10:00:00Z",
+  "name": "RFT Online DayOne",
+  "news": "Manutenção RFT agora aceita inclusão de perdas, mesmo para componentes que não estão cadastrados. O cadastro é feito automaticamente.\n",
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-06-10T10:00:00Z",
+      "description": "Primeira versão do sistema.",
+      "changes": [
+        "Lançar nova RFT",
+        "Manutenção RFT",
+        "Relatórios"
+      ]
+    }
+  ]
+}

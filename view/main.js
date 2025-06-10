@@ -1,5 +1,6 @@
 import {NovaRFT, ManutencaoRFT} from './rfts.js';
 import { Relatorio } from './relatorios.js';
+import { Versao } from './versao.js';
 import { toast } from './components/toast.js';
 
 //REQUESTS INÍCIO
@@ -8,6 +9,7 @@ const operadores    =   await eel.getData('operador')();
 const etapas        =   await eel.getData('etapa')();
 const solucoes      =   await eel.getData('solucao')();
 const erros         =   await eel.getData('erro')();
+const versao_data   =   await eel.obter_detalhes_da_versao()();
 //REQUESTS FIM
 
 //DECLARAÇÃO DE ABAS INÍCIO
@@ -30,6 +32,12 @@ const relatorio = new Relatorio(
     etapas,
     erros,
     solucoes,
+);
+const versao = new Versao (
+    'versao-header',
+    'versao-body',
+    'versao-footer',
+    versao_data
 );
 //DECLARAÇÃO DE ABAS FIM
 
