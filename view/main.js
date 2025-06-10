@@ -7,6 +7,7 @@ toast.accuse("Obtendo dados");
 const operadores    =   await eel.getData('operador')();
 const etapas        =   await eel.getData('etapa')();
 const solucoes      =   await eel.getData('solucao')();
+const erros         =   await eel.getData('erro')();
 //REQUESTS FIM
 
 //DECLARAÇÃO DE ABAS INÍCIO
@@ -25,7 +26,10 @@ const manutencao_rft = new ManutencaoRFT(
 );
 const relatorio = new Relatorio(
     'relatorio-header',
-    'relatorio-body'
+    'relatorio-body',
+    etapas,
+    erros,
+    solucoes,
 );
 //DECLARAÇÃO DE ABAS FIM
 
