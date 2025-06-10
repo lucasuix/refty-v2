@@ -8,13 +8,13 @@ class Aggregation extends Block {
     constructor(dom, id = 'relatorio-aggregation') {
         super(dom, id);
         this.form.values = {
-            'tempo_real_medio_manutencao': false,
-            'tempo_proprio_medio_manutencao': false,
-            'rfts_por_etapa': false,
-            'perdas_por_componente': false,
-            'quantidade_total_rfts': false,
-            'erro_mais_frequente': false,
-            'solucao_mais_frequente': false
+            'tempo_real_medio_manutencao': true,
+            'tempo_proprio_medio_manutencao': true,
+            'rfts_por_etapa': true,
+            'perdas_por_componente': true,
+            'quantidade_total_rfts': true,
+            'erro_mais_frequente': true,
+            'solucao_mais_frequente': true
         }
     }
 
@@ -94,6 +94,8 @@ export class Relatorio {
         this.gerar_btn = new Button('Gerar Relatório', ['btn-primary'], 'relatorio-gerar');
         this.inicio = new DatetimeInput('Selecione a data de início', 'relatorio-data-inicio');
         this.final = new DatetimeInput('Selecione a data final', 'relatorio-data-final');
+        let hoje = new Date();
+        this.final.setValue(hoje.toISOString().slice(0, 16)); // Define automaticamente como o dia de hoje
 
         this.gerar_btn.button.addEventListener('click', () => this.requisitar_relatorio());
         this.callbacks = {
@@ -228,7 +230,7 @@ export class Relatorio {
 
     erro_mais_frequente(list) {
         let table = new Table(['Erro', 'Quantidade'], ['table-striped', 'table-bordered'], 'erro-mais-frequente-table');
-        let wrapper = this.generate_wrapper(this.generateTitle('Quantidade de Erros por ID (mais frequente p/ menos frequente)'));
+        let wrapper = this.generate_wrapper(this.generateTitle('Quantidade de Erros por ID'));
         wrapper.appendChild(table.table);
         this.body.appendChild(wrapper);
         table.populate(this.map_id_to_name(list, this.erros));
@@ -237,7 +239,7 @@ export class Relatorio {
 
     solucao_mais_frequente(list) {
         let table = new Table(['Solução', 'Quantidade'], ['table-striped', 'table-bordered'], 'solucao-mais-frequente-table');
-        let wrapper = this.generate_wrapper(this.generateTitle('Quantidade de Soluções por ID (mais frequente p/ menos frequente)'));
+        let wrapper = this.generate_wrapper(this.generateTitle('Quantidade de Soluções por ID'));
         wrapper.appendChild(table.table);
         this.body.appendChild(wrapper);
         table.populate(this.map_id_to_name(list, this.solucoes));

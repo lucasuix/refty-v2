@@ -181,7 +181,35 @@ export class ManutencaoRFT {
 		}
 
 		this.save_rft_rebound = (rft, others) => {
-			console.log("Save RFT rebound!");
+			this.clear();
+
+			this.internal_rft_id = rft.id;
+			this.serialnumber.setValue(rft.serialnumber);
+			this.operador_id.setValue(rft.operador_id);
+			this.etapa.setValue(rft.etapa_id);
+			this.erros.setAll(rft.defeitos, rft.etapa_id);
+			this.erros.render(rft.etapa_id);
+			this.erros.disabled(true, rft.etapa_id);
+			this.erros.erro_id.setValue(rft.erro_id);
+			this.erros.erro_id.disabled(true);
+
+			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
+			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
+			this.solucao.setValue(rft.solucao_id == undefined ? "" : rft.solucao_id);
+			this.perdas.popular_perdas(rft.perdas, rft.metadata.concluida);
+			this.perdas.popular_componentes(others.componentes);
+
+			this.tecnico_id.disabled(rft.metadata.concluida);
+			this.procedimento.disabled(rft.metadata.concluida);
+			this.solucao.disabled(rft.metadata.concluida);
+			this.perdas.disabled(rft.metadata.concluida);
+
+			this.salvar_rft.disabled(rft.metadata.concluida);
+			this.pausar_rft.disabled(rft.metadata.congelada || rft.metadata.concluida );
+			this.enviar_rft.disabled(rft.metadata.concluida || rft.metadata.congelada);
+			this.retomar_rft.disabled(!(rft.metadata.congelada) || rft.metadata.concluida);
+
+			this.show();
 		}
 
 		this.finish_rft_rebound = (rft, others) => {
