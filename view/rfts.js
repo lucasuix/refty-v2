@@ -2,6 +2,8 @@ import {Button} from './components/button.js';
 import {Select} from './components/select.js';
 import {TextInput} from './components/input.js';
 import {TextArea} from './components/textarea.js';
+import {SwitchInput} from './components/switchinput.js';
+import {SolutionPanel} from './components/solutionpanel.js';
 import {setVisibility} from './utils/visibility.js';
 import { gerar_descricao } from './utils/gerar_descricao.js';
 import {send} from './request.js';
@@ -105,9 +107,11 @@ export class NovaRFT {
 export class ManutencaoRFT {
 
 	//DECLARAÇÃO INÍCIO
-	constructor(header_frame, body_frame, error_frame, manutencao_frame, footer_frame) {
+	constructor(header_frame, ia_switch_frame, ia_solutions_frame, body_frame, error_frame, manutencao_frame, footer_frame) {
 
 		this.header = document.getElementById(header_frame);
+		this.ia_switch_frame = document.getElementById(ia_switch_frame);
+		this.ia_solutions_frame = document.getElementById(ia_solutions_frame);
 		this.body = document.getElementById(body_frame);
 		this.erro = document.getElementById(error_frame);
 		this.manutencao = document.getElementById(manutencao_frame);
@@ -115,12 +119,14 @@ export class ManutencaoRFT {
 
 		this.search_rft = new TextInput('Digite o número de série', 'manutencao-rft-search-rft');
 		this.get_last_rft = new Button('Obter última RFT', ['btn-success'], 'manutencao-rft-get-last-rft');
+		this.ia_switch = new SwitchInput('Prever solução com IA', 'ai-assist-switch');
 
 		this.internal_rft_id = "";
 		this.serialnumber = new TextInput('Número de série', 'manutencao-rft-serialnumber', true);
 		this.operador_id = new Select('Operador', 'manutencao-rft-operador', true);
 		this.etapa = new Select('Etapa', 'manutencao-rft-etapa', true);
 		this.tecnico_id = new Select('Tecnico', 'manutencao-rft-tecnico');
+		this.solution_panel = new SolutionPanel('manutencao-rft-solucoes-ia');
 		this.procedimento = new TextArea('Procedimento realizado...', 'manutencao-rft-procedimento');
 		this.solucao = new Select('Solução', 'manutencao-rft-solucao');
 
@@ -154,6 +160,14 @@ export class ManutencaoRFT {
 			this.erros.disabled(true, rft.etapa_id);
 			this.erros.erro_id.setValue(rft.erro_id);
 			this.erros.erro_id.disabled(true);
+
+			if (others.ia_response.length > 0) {
+				setVisibility(this.ia_solutions_frame, true);
+				this.solution_panel.setValuesFromList(others.ia_response);
+			}
+			else {
+				setVisibility(this.ia_solutions_frame, false);
+			}
 
 			this.tecnico_id.setValue(rft.tecnico_id == undefined ? "" : rft.tecnico_id);
 			this.procedimento.setValue(rft.procedimento == undefined ? "" : rft.procedimento);
@@ -230,6 +244,7 @@ export class ManutencaoRFT {
 	render_header() {
 		this.search_rft.render(this.header);
 		this.get_last_rft.render(this.header);
+		this.ia_switch.render(this.ia_switch_frame);
 	}
 
 	render_body() {
@@ -242,6 +257,7 @@ export class ManutencaoRFT {
 		this.tecnico_id.render(this.manutencao);
 		this.procedimento.render(this.manutencao);
 		this.solucao.render(this.manutencao);
+		this.solution_panel.render(this.ia_solutions_frame);
 		this.perdas.render(this.manutencao);
 		this.cancelar.render(this.footer);
 		this.salvar_rft.render(this.footer);
@@ -261,6 +277,7 @@ export class ManutencaoRFT {
 
 	hide() {
 		setVisibility(this.manutencao, false);
+		setVisibility(this.ia_solutions_frame, false);
 		setVisibility(this.body, false);
 		setVisibility(this.footer, false);
 	}
@@ -312,7 +329,10 @@ export class ManutencaoRFT {
 
 	start_rft() {
 		const payload = {
-			"rft": {"serialnumber": this.search_rft.getValue()},
+			"rft": {
+				"serialnumber": this.search_rft.getValue(),
+				"ia_assist": this.ia_switch.getValue()
+			},
 			"metadata": {
 				"action": "iniciar_manutencao"
 			}

@@ -21,6 +21,8 @@ const nova_rft = new NovaRFT(
 );
 const manutencao_rft = new ManutencaoRFT(
     'manutencao-rft-header',
+    'manutencao-rft-ia-switch',
+    'manutencao-rft-ia-solutions',
     'manutencao-rft-body',
     'manutencao-rft-erros',
     'manutencao-rft-manutencao',
