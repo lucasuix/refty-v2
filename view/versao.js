@@ -15,11 +15,18 @@ export class Versao {
   }
 
   renderHeader() {
+    const newsList = this.data.news
+      .map(item => `<li>${item}</li>`)
+      .join("");
+
     this.header.innerHTML = `
       <h1 class="h3">${this.data.name}</h1>
       <p class="mb-0"><strong>Versão:</strong> ${this.data.version}</p>
       <p><strong>Data:</strong> ${new Date(this.data.date).toLocaleString("pt-BR")}</p>
-      <p><strong>Novidades:</strong> ${this.data.news}</p>
+      <p><strong>Novidades:</strong></p>
+      <ul>
+        ${newsList}
+      </ul>
     `;
   }
 
