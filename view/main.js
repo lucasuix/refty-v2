@@ -2,6 +2,7 @@ import {NovaRFT, ManutencaoRFT} from './rfts.js';
 import { Relatorio } from './relatorios.js';
 import { Versao } from './versao.js';
 import { toast } from './components/toast.js';
+import { ListarRfts } from './listarrfts.js';
 
 //REQUESTS INÍCIO
 toast.accuse("Obtendo dados");
@@ -35,7 +36,11 @@ const relatorio = new Relatorio(
     erros,
     solucoes,
 );
-const versao = new Versao (
+const listar_rfts = new ListarRfts(
+    'listar-rfts-header',
+    'listar-rfts-body'
+);
+const versao = new Versao(
     'versao-header',
     'versao-body',
     'versao-footer',
@@ -54,6 +59,12 @@ manutencao_rft.etapa.populate(etapas);
 manutencao_rft.tecnico_id.populate(operadores);
 manutencao_rft.solucao.populate(solucoes);
 await manutencao_rft.erros.populate_erros_id();
+
+listar_rfts.operador_id.populate(operadores);
+listar_rfts.etapa_id.populate(etapas);
+listar_rfts.tecnico_id.populate(operadores);
+listar_rfts.solucao_id.populate(solucoes);
+listar_rfts.erro_id.populate(erros);
 //POPULATES FIM
 
 toast.accuse("Bem Vindo!");
