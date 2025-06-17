@@ -4,7 +4,8 @@
   "name": "RFT Online - DayOne",
   "news": [
     "Manutenção RFT agora aceita inclusão de perdas, mesmo para componentes que não estão cadastrados. O cadastro é feito automaticamente.",
-    "Ao pesquisar a RFT na aba Manutenção é possível prever a solução com IA. Elas são listadas logo abaixo do formulário."
+    "Ao pesquisar a RFT na aba Manutenção é possível prever a solução com IA. Elas são listadas logo abaixo do formulário.",
+    "Possível Listar RFTs existentes no Banco de Dados com filtros de pesquisa."
   ],
   "changelog": [
     {

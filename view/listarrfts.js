@@ -68,8 +68,9 @@ class RftCard {
                     </div>
 
                     <div class="mt-3">
-                        <button class="btn btn-outline-primary btn-sm">Ver Mais</button>
-                        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                        <!-- Funcionalidades para implementar depois -->
+                        <button class="btn btn-outline-primary btn-sm d-none">Ver Mais</button>
+                        <button class="btn btn-outline-danger btn-sm d-none">Excluir</button>
                     </div>
 
                     </div>
@@ -97,10 +98,15 @@ export class ListarRfts {
         this.wrapper_body = document.createElement('div');
         this.wrapper_body.classList.add('d-flex', 'mx-3');
         this.etapa_id = new Select('Etapa', 'listar-rfts-etapa', false);
+        this.etapa_id.placeholderOption.disabled = false;
         this.erro_id = new Select('Erro ID', 'listar-rfts-erro', false);
+        this.erro_id.placeholderOption.disabled = false;
         this.operador_id = new Select('Operador', 'listar-rfts-operador', false);
+        this.operador_id.placeholderOption.disabled = false;
         this.tecnico_id = new Select('Técnico', 'listar-rfts-tecnico', false);
+        this.tecnico_id.placeholderOption.disabled = false;
         this.solucao_id = new Select('Solução ID', 'listar-rfts-solucao', false);
+        this.solucao_id.placeholderOption.disabled = false;
 
         this.wrapper_footer = document.createElement('div');
         this.wrapper_footer.classList.add('justify-content-end', 'd-flex', 'mx-3', 'mb-3');
