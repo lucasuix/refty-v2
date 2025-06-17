@@ -8,4 +8,4 @@ git pull https://%TOKEN%@github.com/lucasuix/refty-v2.git main
 
 :: Inicia o app (sem console)
 start "" pythonw app.py
-pause
+exit
