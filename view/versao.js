@@ -51,7 +51,7 @@ export class Versao {
   renderFooter() {
     this.footer.innerHTML = `
       <div class="text-muted small">
-        Última atualização em: ${new Date(this.data.date).toLocaleString("pt-BR")}
+        Última atualização em: ${new Date(this.data.date).toLocaleString("pt-BR")} - Desenvolvido por <a>Lucas Villani | https://github.com/lucasuix</a>
       </div>
     `;
   }

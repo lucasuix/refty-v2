@@ -52,4 +52,4 @@ def obter_detalhes_da_versao():
 
 if __name__ == "__main__":
 	eel.init("view")
-	eel.start("index.html", port=8002)
+	eel.start("index.html", port=8002, size=(1024,768))
