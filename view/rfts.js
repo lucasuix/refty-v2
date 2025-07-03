@@ -136,7 +136,7 @@ export class ManutencaoRFT {
 
 		this.modal_confirmacao = new Modal({
 			title: "Atenção",
-			message: "Confirma envio de RFT?",
+			message: "Confirma envio de Manutenção?",
 			id: 'manutencao-rft-modal',
 			buttons: [
 				{label: 'Cancelar', class: 'btn-danger', dismiss: true},
