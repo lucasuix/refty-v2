@@ -155,7 +155,7 @@ export class ManutencaoRFT {
 		this.salvar_rft = new Button('Salvar', ['btn-secondary'], 'manutencao-rft-salvar-rft');
 		this.retomar_rft = new Button('Retomar', ['btn-warning', 'manutencao-rft-retomar']);
 		this.pausar_rft = new Button('Pausar', ['btn-warning'], 'manutencao-rft-pausar');
-		this.enviar_rft = new Button('Enviar RFT', ['btn-success'], 'manutencao-rft-enviar');
+		this.enviar_rft = new Button('Concluir RFT', ['btn-success'], 'manutencao-rft-enviar');
 
 		this.search_rft.input.addEventListener('input', () => this.dynamic_search());
 		this.get_last_rft.button.addEventListener('click', () => this.start_rft());
