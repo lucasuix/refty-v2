@@ -4,6 +4,7 @@ import {TextInput} from './components/input.js';
 import {TextArea} from './components/textarea.js';
 import {SwitchInput} from './components/switchinput.js';
 import {SolutionPanel} from './components/solutionpanel.js';
+import {Modal} from "./components/modal.js";
 import {setVisibility} from './utils/visibility.js';
 import { gerar_descricao } from './utils/gerar_descricao.js';
 import {send} from './request.js';
@@ -133,7 +134,24 @@ export class ManutencaoRFT {
 		this.perdas = new Perdas();
 		this.erros = new Erros(this.erro, 'manutencao-rft');
 
-		this.cancelar = new Button('Cancelar', ['btn-danger'], 'manutencao-rft-cancelar');
+		this.modal_confirmacao = new Modal({
+			title: "Atenção",
+			message: "Confirma envio de RFT?",
+			id: 'manutencao-rft-modal',
+			buttons: [
+				{label: 'Cancelar', class: 'btn-danger', dismiss: true},
+				{
+					label: 'Confirmar',
+					class: 'btn-success',
+					dismiss: true,
+					onClick:  () => this.finish_rft()
+				}
+			],
+			keyboard: false,
+			staticBackdrop: true
+		});
+
+		this.cancelar = new Button('Voltar', ['btn-danger'], 'manutencao-rft-cancelar'); //Não cancela de verdade, só limpa a tela
 		this.salvar_rft = new Button('Salvar', ['btn-secondary'], 'manutencao-rft-salvar-rft');
 		this.retomar_rft = new Button('Retomar', ['btn-warning', 'manutencao-rft-retomar']);
 		this.pausar_rft = new Button('Pausar', ['btn-warning'], 'manutencao-rft-pausar');
@@ -145,7 +163,8 @@ export class ManutencaoRFT {
 		this.salvar_rft.button.addEventListener('click', () => this.save_rft());
 		this.pausar_rft.button.addEventListener('click', () => this.pause_rft());
 		this.retomar_rft.button.addEventListener('click', () => this.unpause_rft());
-		this.enviar_rft.button.addEventListener('click', () => this.finish_rft());
+		//this.enviar_rft.button.addEventListener('click', () => this.finish_rft());
+		this.enviar_rft.button.addEventListener('click', () => this.confirma_rft());
 
 		this.start_rft_rebound = (rft, others) => {
 			this.search_rft.setValue("");
@@ -259,6 +278,7 @@ export class ManutencaoRFT {
 		this.solucao.render(this.manutencao);
 		this.solution_panel.render(this.ia_solutions_frame);
 		this.perdas.render(this.manutencao);
+		this.modal_confirmacao.render(this.manutencao);
 		this.cancelar.render(this.footer);
 		this.salvar_rft.render(this.footer);
 		this.pausar_rft.render(this.footer);
@@ -339,6 +359,10 @@ export class ManutencaoRFT {
 		}
 
 		send(payload, this.start_rft_rebound);
+	}
+
+	confirma_rft() {
+		this.modal_confirmacao.show();
 	}
 
 	save_rft() {
